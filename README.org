@@ -1,0 +1,3 @@
+The ~macfa-mode~ is a emacs package that allows you to set firstmost of macos app by system process name.
+
+
