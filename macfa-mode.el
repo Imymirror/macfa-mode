@@ -8,7 +8,6 @@
     (if (equal string "") string (substring string 0 -1))))
 
 (defun macfa/shell-get-process-id(process-name)
-  ;; (interactive)
   (macfa/shell-command-string (concat "/bin/echo $(pgrep -x '" process-name "')")))
 
 
@@ -22,7 +21,7 @@
                    "set frontmost of the first process whose unix id is " id " to true\n"
                    "end tell\n")) 
 
-        ;; (stdout-output nil)
+         ;; (stdout-output nil)
          (proc (start-process "osascript-getinfo" "*osascript*" "osascript" "-e" script))
          (sentinel-output nil)
 
@@ -47,8 +46,6 @@
 
 
 (defun macfa/switch-app-by-process-name(process-name)
-  ;; (interactive)
-
   (let ((process-id (assoc process-name  macfa-front-app-alist)))
 
     (when (not process-id)
@@ -64,20 +61,14 @@
       (push `(,process-name . ,process-id) macfa-front-app-alist))
     (macfa/mac-set-app-front process-name )))
 
-;; (defun macfa/macfa-sioyek()
-;;   "front mac app sioyek"
-;;   (interactive)
-;;   (macfa/switch-app-by-process-name "sioyek"))
 
 (defmacro macfa/install-macfa (process-name &optional rename)
   "Give process-name regarding macos, install the interactive command to front the app"
   (let ((func-name (if rename rename process-name)))
-   `(defun  ,(intern (format "macfa-%s" (downcase (replace-regexp-in-string " " "-" func-name)))) ()
+    `(defun  ,(intern (format "macfa-%s" (downcase (replace-regexp-in-string " " "-" func-name)))) ()
        ,(format "front macs app : %s " func-name)
        (interactive)
-       (macfa/switch-app-by-process-name ,process-name)) 
-    )
-  )
+       (macfa/switch-app-by-process-name ,process-name))))
 
 ;; (defcustom macfa-keymap-prefix "C-c s"
 ;;   "The prefix for macfa-mode key bindings."
@@ -86,15 +77,6 @@
 
 ;; (defun macfa--key (key)
 ;;   (kbd (concat macfa-keymap-prefix " " key)))
-
-;; (defun macfa-test()
-;;   "test"
-;;   (message "macfa-test"))
-
-;;       (setq macfa-mode-map
-;;             (let ((map (make-sparse-keymap)))
-;;               (define-key map (kbd "C-c s s") 'macfa-test)
-;;               map))
 
 (define-minor-mode macfa-mode
   "Toggles global macfa-mode."
