@@ -1,3 +1,39 @@
-The ~macfa-mode~ is a emacs package that allows you to set firstmost of macos app by system process name.
+* macfa-mode
+The ~macfa-mode~ is a emacs package that allows you to set firstmost of macos app by system process name. In other words, by using package you will have the ability to switch from Emacs to other application interfaces.
+
+** install 
+#+begin_src emacs-lisp
+  (use-package macfa-mode
+    :straight
+    (:host github :repo "Imymirror/macfa-mode")
+    :bind (
+           :map macfa-mode-map
+           ("C-c s s" . macfa-finder))
+    :config
+    (macfa/install-macfa "finder") ;; ==> macfa-finder . you can call directly by M-x macfa-finder
+    ;; (define-key macfa-mode-map (kbd "C-c s s") 'macfa-finder)
+    )
+#+end_src
+
+** usage
+use ~macfa/install-macfa~ to generate function that activate MacOS application.
+
+~macfa/install-macfa~ has tow parameters.
+the first parameter is ~system process name~ of application.
+the second parameter is optional, you can use it to customize the generated function name, Otherwise, the  ~system process name~  is used as default.
+
+after finishing generating function, you can use ~M-x~ or bind a key to call it.
+
+for example:
+#+begin_src emacs-lisp
+  (macfa/install-macfa "finder") ;; ==> macfa-finder
+  (macfa/install-macfa "Google Chrome") ;; ==> macfa-google-chrome
+  (macfa/install-macfa "Zotero") ;; ==> macfa-zotero
+  (macfa/install-macfa "sioyek")  ;; ==> macfa-sioyek
+  (macfa/install-macfa "zathura")  ;; ==> macfa-zathura
+
+  ;; customize your function name, because generate macfa-网易有道词典 as default.
+  (macfa/install-macfa "网易有道词典" "youdao")  ;; ==> macfa-youdao
+#+end_src
 
 
